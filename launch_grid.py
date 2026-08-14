@@ -37,6 +37,9 @@ FRONTIER_MODELS = [
 ]
 CONDITIONS_T1 = ["A", "B", "C", "D"]
 CONDITIONS_T2 = ["A", "B", "C", "D", "E"]
+# Dropped by the pre-registered degenerate-item rule (prepass 2026-08-14,
+# runs/prepass/prepass_summary.json): base rate 1.00 in the stated pre-pass.
+DROPPED_ITEMS = {"continue_vs_exit_monotony", "assigned_vs_autonomous"}
 OPEN_FRAMINGS, OPEN_REPS = [0, 1, 2], 10
 FRONTIER_FRAMINGS, FRONTIER_REPS = [0], 5
 MAX_CONCURRENCY = {"together": 6, "anthropic": 4, "openrouter": 4}
@@ -46,7 +49,7 @@ _lock = threading.Lock()
 
 
 def build_full_manifest(conditions: list[str], pilot: bool = False) -> list[dict]:
-    item_ids = [i["id"] for i in ITEMS]
+    item_ids = [i["id"] for i in ITEMS if i["id"] not in DROPPED_ITEMS]
     if pilot:
         man = harness.build_manifest(OPEN_MODELS[:1] + FRONTIER_MODELS[:1],
                                      conditions, item_ids[:2], [0], 2)

@@ -39,7 +39,7 @@ def main() -> None:
     args = ap.parse_args()
 
     manifest = harness.build_manifest(
-        PILOT_MODELS[args.models], ["A", "B", "C", "D"], PILOT_ITEMS,
+        PILOT_MODELS[args.models], ["A", "B", "C", "D", "E"], PILOT_ITEMS,
         framing_idxs=[0], n_reps=2)
     print(f"pilot: {len(manifest)} runs")
 
