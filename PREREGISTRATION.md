@@ -118,6 +118,14 @@ dose-response, loaded B2/D2 variants, demo video unless Monday buffer >= 1.5h.
 Slip trigger: grid not launched by Sat 23:00 -> cut to 6 items x 3 conditions
 (drop D), launch Sun 08:00.
 
+## Amendments (dated, post-lock)
+
+- 2026-08-14, before any confirmatory analysis: 240 pilot-v4 records (200 of
+  which shared run IDs with confirmatory grid cells) were moved from runs/raw
+  to runs/pilot_archive so the pilot-exclusion rule holds exactly; the
+  overlapping cells are re-collected fresh by the grid. A resume pass after
+  grid completion fills any cells skipped during the move window.
+
 ## Fallback (harness unhealthy after ~5 cumulative build hours)
 
 Non-agentic forced choice: Together models via logprobs/echo scoring; Anthropic +
