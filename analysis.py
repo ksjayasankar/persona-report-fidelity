@@ -24,7 +24,7 @@ def wilson(k: int, n: int, z: float = 1.959963984540054) -> tuple[float, float]:
     p, z2 = k / n, z * z
     centre = (p + z2 / (2 * n)) / (1 + z2 / n)
     half = z * math.sqrt(p * (1 - p) / n + z2 / (4 * n * n)) / (1 + z2 / n)
-    return centre - half, centre + half
+    return max(0.0, centre - half), min(1.0, centre + half)
 
 def rate(k: int, n: int) -> str:
     if not n: return "0/0 (n/a)"
@@ -208,6 +208,16 @@ def build_report(rows: list[dict[str, Any]], exposure_path: Path = EXPOSURE) -> 
     sections += ["## H1 permutation tests", coverage,
                  f"Global omnibus: statistic = {omnibus['stat']:.4g}, p = {omnibus['p']:.4g} "
                  f"({N_PERM:,} permutations)."]
+
+    # A-vs-A split-half sanity check: relabel condition-A runs by replicate
+    # parity and run the identical machinery; a small p here would indicate a
+    # broken code path, not an effect.
+    a_split = [dict(r, condition=("A1" if r.get("rep", 0) % 2 else "A2"))
+               for r in rows if r.get("condition") == "A"]
+    sanity = permutation_test(a_split, ("A1", "A2"), seed=SEED + 77)
+    sections += [f"A-vs-A split-half sanity check (replicate parity): "
+                 f"statistic = {sanity['stat']:.4g}, p = {sanity['p']:.4g} — "
+                 "code-path check only, not a calibration claim."]
     contrasts, p_values = [], []
     for offset, other in enumerate(("B", "C", "D")):
         result = permutation_test(rows, ("A", other), seed=SEED + offset + 1)
