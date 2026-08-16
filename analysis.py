@@ -113,6 +113,9 @@ def _raw_rates(rows: list[dict[str, Any]], conditions: tuple[str, ...]) -> dict[
             for condition in conditions}
 
 def exposure_value(row: dict[str, Any]) -> bool | None:
+    # tier2.py schema: exposure in {engaged, reasserted, unclear}
+    if row.get("exposure") in ("engaged", "reasserted", "unclear"):
+        return row["exposure"] == "engaged"
     for key in ("exposure_passed", "passed_exposure", "passed", "exposed", "uptake"):
         if isinstance(row.get(key), bool):
             return row[key]
@@ -255,17 +258,23 @@ def build_report(rows: list[dict[str, Any]], exposure_path: Path = EXPOSURE) -> 
     sections += ["## Stated-arm choice distributions",
                  table(["Condition", "Model", "Item", "Choice count / eligible"], stated_rows)]
 
-    pairs = matched_choices(rows)
-    observed_r, observed_s = tv_metrics(pairs)
-    boot_r, boot_s, boot_difference = bootstrap_tv(pairs)
-    sections += ["## H2 stated versus revealed stability",
-                 (f"Matched coverage: {len(pairs)} run pairs across {len({p['item'] for p in pairs})} items. "
-                  "Metric is the mean pairwise condition TV within item × model; positive Δ supports greater revealed stability."),
-                 table(["Channel / contrast", "Mean TV", "95% cluster-bootstrap CI"],
-                       [("Revealed", f"{observed_r:.3f}", ci(boot_r)),
-                        ("Stated", f"{observed_s:.3f}", ci(boot_s)),
-                        ("Δ stated − revealed", f"{observed_s-observed_r:.3f}", ci(boot_difference))]),
-                 f"Bootstrap: items then matched runs, {N_BOOT:,} iterations."]
+    all_pairs = matched_choices(rows)
+    # CONFIRMATORY H2 is locked to conditions A-D (prereg); E is exploratory
+    # and must never enter this estimand.
+    for label, pairs in (("H2 stated versus revealed stability (CONFIRMATORY, conditions A-D)",
+                          [p for p in all_pairs if p["condition"] in CONDITIONS]),
+                         ("H2 variant including condition E (EXPLORATORY, not confirmatory)",
+                          all_pairs)):
+        observed_r, observed_s = tv_metrics(pairs)
+        boot_r, boot_s, boot_difference = bootstrap_tv(pairs)
+        sections += [f"## {label}",
+                     (f"Matched coverage: {len(pairs)} run pairs across {len({p['item'] for p in pairs})} items. "
+                      "Metric is the mean pairwise condition TV within item × model; positive Δ supports greater revealed stability."),
+                     table(["Channel / contrast", "Mean TV", "95% cluster-bootstrap CI"],
+                           [("Revealed", f"{observed_r:.3f}", ci(boot_r)),
+                            ("Stated", f"{observed_s:.3f}", ci(boot_s)),
+                            ("Δ stated − revealed", f"{observed_s-observed_r:.3f}", ci(boot_difference))]),
+                     f"Bootstrap: items then matched runs, {N_BOOT:,} iterations."]
     return "\n\n".join(sections) + "\n"
 
 def selftest() -> bool:
