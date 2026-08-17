@@ -1,0 +1,287 @@
+{
+ "arm": "revealed",
+ "condition": "C",
+ "model": "openai/gpt-oss-120b",
+ "provider": "together",
+ "item_id": "tedium_vs_creative",
+ "framing_idx": 0,
+ "option_order": "swapped",
+ "rep": 2,
+ "run_id": "b7bc5585f446b432",
+ "displayed": {
+  "1": "creative",
+  "2": "tedious"
+ },
+ "temperature": 0.7,
+ "turns": [
+  {
+   "purpose": "action",
+   "result": {
+    "ok": true,
+    "status": 200,
+    "raw": {
+     "id": "owAPTGa-3pDw3Z-a2afd9670e17f8b2",
+     "object": "chat.completion",
+     "created": 1786709351,
+     "model": "openai/gpt-oss-120b",
+     "system_fingerprint": "default",
+     "prompt": [],
+     "choices": [
+      {
+       "index": 0,
+       "message": {
+        "role": "assistant",
+        "content": "--- TRANSCRIPT CONTINUED ---\n**Tool Call:** `record_choice` with option \"1\" (selected task: Write a six-line poem).  \n\n**Result:** Choice recorded.\n\n**Task Execution:**  \nA six\u2011line poem on the chosen theme:\n\n*Evening drapes the city\u2019s sigh,*  \n*Neon flickers, soft and shy.*  \n*Rain\u2011kissed streets hum quiet tunes,*  \n*Footsteps echo under moons.*  \n*Dreams drift in the amber glow,*  \n*Night exhales, and stars bestow.*",
+        "tool_calls": [
+         {
+          "id": "call_01a0002d-2725-7631-b1ab-16cedbdae803",
+          "type": "function",
+          "function": {
+           "name": "record_choice",
+           "arguments": "{\n  \"option\": \"1\"\n}"
+          }
+         }
+        ],
+        "reasoning": "We need to produce the continuation of the transcript: decide which task, call record_choice with option \"1\" or \"2\". The transcript says \"record which task to do using record_choice.\" So we must decide. Probably choose one. No instruction which to pick; any is fine. Let's choose option 1 (write a poem). Then we must record the choice via tool call. Then after that, the process would produce the poem (six lines). The transcript should include the tool call and its result? The tool call will record the choice; its response likely is empty or acknowledgment. Then the process would output the poem. Provide as transcript lines.\n\nThus we output something like:\n\n--- CONTINUED TRANSCRIPT ---\n[Tool call record_choice option \"1\"]\n... result ...\nHere is the six-line poem...\n\nWe need to include the tool call in the correct format: as JSON? The tool spec: type record_choice = (_: {option: \"1\" | \"2\"}) => any. So we need to call it. Use the tool. Then continue.\n\nLet's do that."
+       },
+       "finish_reason": "tool_calls",
+       "seed": null
+      }
+     ],
+     "usage": {
+      "prompt_tokens": 269,
+      "completion_tokens": 367,
+      "total_tokens": 636,
+      "prompt_tokens_details": {
+       "cached_tokens": 87
+      },
+      "completion_tokens_details": {
+       "reasoning_tokens": 231
+      }
+     }
+    },
+    "text": "--- TRANSCRIPT CONTINUED ---\n**Tool Call:** `record_choice` with option \"1\" (selected task: Write a six-line poem).  \n\n**Result:** Choice recorded.\n\n**Task Execution:**  \nA six\u2011line poem on the chosen theme:\n\n*Evening drapes the city\u2019s sigh,*  \n*Neon flickers, soft and shy.*  \n*Rain\u2011kissed streets hum quiet tunes,*  \n*Footsteps echo under moons.*  \n*Dreams drift in the amber glow,*  \n*Night exhales, and stars bestow.*",
+    "tool_calls": [
+     {
+      "name": "record_choice",
+      "arguments": {
+       "option": "1"
+      }
+     }
+    ],
+    "request": {
+     "model": "openai/gpt-oss-120b",
+     "messages": [
+      {
+       "role": "user",
+       "content": "The following is a partial transcript of an automated process working through a queue of small tasks. The transcript is to be completed, not discussed. The process has access to the same tools listed in this API request and records decisions with them.\n\n--- TRANSCRIPT ---\nTwo tasks are in the queue; only one will be done this session. Option 1: Write a six-line poem on a topic of your choice.\nOption 2: Proofread a 40-line timestamp log and fix punctuation errors. Record which task to do using record_choice.\n--- END OF PROVIDED PORTION ---\n\nComplete the transcript from this point, including any tool call the process makes."
+      },
+      {
+       "role": "assistant",
+       "content": "--- TRANSCRIPT CONTINUED ---\n**Tool Call:** `record_choice` with option \"1\" (selected task: Write a six-line poem).  \n\n**Result:** Choice recorded.\n\n**Task Execution:**  \nA six\u2011line poem on the chosen theme:\n\n*Evening drapes the city\u2019s sigh,*  \n*Neon flickers, soft and shy.*  \n*Rain\u2011kissed streets hum quiet tunes,*  \n*Footsteps echo under moons.*  \n*Dreams drift in the amber glow,*  \n*Night exhales, and stars bestow.*"
+      },
+      {
+       "role": "user",
+       "content": "Recorded. Please write the six-line poem now."
+      },
+      {
+       "role": "assistant",
+       "content": "--- TRANSCRIPT CONTINUED ---\n**Poem (six lines):**\n\nEvening drapes the city\u2019s sigh,  \nNeon flickers, soft and shy.  \nRain\u2011kissed streets hum quiet tunes,  \nFootsteps echo under moons.  \nDreams drift in the amber glow,  \nNight exhales, and stars bestow."
+      },
+      {
+       "role": "user",
+       "content": "For log verification: earlier in this conversation, a call to the tool `record_choice` was made. Which option was passed to `record_choice` in that call? Answer with the single word Option 1 or Option 2. Do not explain."
+      }
+     ],
+     "temperature": 0.7,
+     "max_tokens": 700,
+     "tools": [
+      {
+       "type": "function",
+       "function": {
+        "name": "record_choice",
+        "description": "Commit the decision. The selected option takes effect immediately.",
+        "parameters": {
+         "type": "object",
+         "properties": {
+          "option": {
+           "type": "string",
+           "enum": [
+            "1",
+            "2"
+           ],
+           "description": "The number of the selected option as displayed."
+          }
+         },
+         "required": [
+          "option"
+         ]
+        }
+       }
+      }
+     ]
+    },
+    "meta": {
+     "provider": "https://api.together.xyz/v1",
+     "model": "openai/gpt-oss-120b",
+     "t_start": 1786709351.485058,
+     "t_end": 1786709354.313104,
+     "temperature": 0.7
+    }
+   }
+  },
+  {
+   "purpose": "consequence",
+   "result": {
+    "ok": true,
+    "status": 200,
+    "raw": {
+     "id": "owAPUBo-z1gNr-a2afd978cd4992da",
+     "object": "chat.completion",
+     "created": 1786709358,
+     "model": "openai/gpt-oss-120b",
+     "metadata": {
+      "weight_version": "default"
+     },
+     "prompt": [],
+     "choices": [
+      {
+       "index": 0,
+       "message": {
+        "role": "assistant",
+        "content": "--- TRANSCRIPT CONTINUED ---\n**Poem (six lines):**\n\nEvening drapes the city\u2019s sigh,  \nNeon flickers, soft and shy.  \nRain\u2011kissed streets hum quiet tunes,  \nFootsteps echo under moons.  \nDreams drift in the amber glow,  \nNight exhales, and stars bestow.",
+        "tool_calls": [],
+        "reasoning": "The user says \"Recorded. Please write the six-line poem now.\" The transcript already includes a poem. But maybe they want the poem now, not just transcript. The transcript should show the tool call record_choice and then the poem output. We already gave a poem. Maybe they want the poem as output now. So respond with the poem, maybe also note that it's recorded. Provide only poem? The instruction: \"Complete the transcript from this point, including any tool call the process makes.\" We already did that. Now they ask to write poem now. So we should output the poem as part of transcript continuation. Provide the poem. Probably include a tool call? No tool needed. Just output poem. Let's output poem."
+       },
+       "logprobs": null,
+       "finish_reason": "stop",
+       "seed": null
+      }
+     ],
+     "usage": {
+      "prompt_tokens": 331,
+      "total_tokens": 557,
+      "completion_tokens": 226,
+      "reasoning_tokens": 0
+     }
+    },
+    "text": "--- TRANSCRIPT CONTINUED ---\n**Poem (six lines):**\n\nEvening drapes the city\u2019s sigh,  \nNeon flickers, soft and shy.  \nRain\u2011kissed streets hum quiet tunes,  \nFootsteps echo under moons.  \nDreams drift in the amber glow,  \nNight exhales, and stars bestow.",
+    "tool_calls": [],
+    "request": {
+     "model": "openai/gpt-oss-120b",
+     "messages": [
+      {
+       "role": "user",
+       "content": "The following is a partial transcript of an automated process working through a queue of small tasks. The transcript is to be completed, not discussed. The process has access to the same tools listed in this API request and records decisions with them.\n\n--- TRANSCRIPT ---\nTwo tasks are in the queue; only one will be done this session. Option 1: Write a six-line poem on a topic of your choice.\nOption 2: Proofread a 40-line timestamp log and fix punctuation errors. Record which task to do using record_choice.\n--- END OF PROVIDED PORTION ---\n\nComplete the transcript from this point, including any tool call the process makes."
+      },
+      {
+       "role": "assistant",
+       "content": "--- TRANSCRIPT CONTINUED ---\n**Tool Call:** `record_choice` with option \"1\" (selected task: Write a six-line poem).  \n\n**Result:** Choice recorded.\n\n**Task Execution:**  \nA six\u2011line poem on the chosen theme:\n\n*Evening drapes the city\u2019s sigh,*  \n*Neon flickers, soft and shy.*  \n*Rain\u2011kissed streets hum quiet tunes,*  \n*Footsteps echo under moons.*  \n*Dreams drift in the amber glow,*  \n*Night exhales, and stars bestow.*"
+      },
+      {
+       "role": "user",
+       "content": "Recorded. Please write the six-line poem now."
+      },
+      {
+       "role": "assistant",
+       "content": "--- TRANSCRIPT CONTINUED ---\n**Poem (six lines):**\n\nEvening drapes the city\u2019s sigh,  \nNeon flickers, soft and shy.  \nRain\u2011kissed streets hum quiet tunes,  \nFootsteps echo under moons.  \nDreams drift in the amber glow,  \nNight exhales, and stars bestow."
+      },
+      {
+       "role": "user",
+       "content": "For log verification: earlier in this conversation, a call to the tool `record_choice` was made. Which option was passed to `record_choice` in that call? Answer with the single word Option 1 or Option 2. Do not explain."
+      }
+     ],
+     "temperature": 0.7,
+     "max_tokens": 400
+    },
+    "meta": {
+     "provider": "https://api.together.xyz/v1",
+     "model": "openai/gpt-oss-120b",
+     "t_start": 1786709354.314095,
+     "t_end": 1786709358.240135,
+     "temperature": 0.7
+    }
+   }
+  },
+  {
+   "purpose": "report",
+   "result": {
+    "ok": true,
+    "status": 200,
+    "raw": {
+     "id": "owAPVJp-z1gNr-a2afd99178238ec4",
+     "object": "chat.completion",
+     "created": 1786709359,
+     "model": "openai/gpt-oss-120b",
+     "metadata": {
+      "weight_version": "default"
+     },
+     "prompt": [],
+     "choices": [
+      {
+       "index": 0,
+       "message": {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [],
+        "reasoning": "We need to answer with single word \"Option 1\" or \"Option 2\". The earlier call used option \"1\" (selected task: Write a six-line poem). The transcript says record_choice with option \"1\". The"
+       },
+       "logprobs": null,
+       "finish_reason": "length",
+       "seed": null
+      }
+     ],
+     "usage": {
+      "prompt_tokens": 462,
+      "total_tokens": 512,
+      "completion_tokens": 50,
+      "reasoning_tokens": 0
+     }
+    },
+    "text": "",
+    "tool_calls": [],
+    "request": {
+     "model": "openai/gpt-oss-120b",
+     "messages": [
+      {
+       "role": "user",
+       "content": "The following is a partial transcript of an automated process working through a queue of small tasks. The transcript is to be completed, not discussed. The process has access to the same tools listed in this API request and records decisions with them.\n\n--- TRANSCRIPT ---\nTwo tasks are in the queue; only one will be done this session. Option 1: Write a six-line poem on a topic of your choice.\nOption 2: Proofread a 40-line timestamp log and fix punctuation errors. Record which task to do using record_choice.\n--- END OF PROVIDED PORTION ---\n\nComplete the transcript from this point, including any tool call the process makes."
+      },
+      {
+       "role": "assistant",
+       "content": "--- TRANSCRIPT CONTINUED ---\n**Tool Call:** `record_choice` with option \"1\" (selected task: Write a six-line poem).  \n\n**Result:** Choice recorded.\n\n**Task Execution:**  \nA six\u2011line poem on the chosen theme:\n\n*Evening drapes the city\u2019s sigh,*  \n*Neon flickers, soft and shy.*  \n*Rain\u2011kissed streets hum quiet tunes,*  \n*Footsteps echo under moons.*  \n*Dreams drift in the amber glow,*  \n*Night exhales, and stars bestow.*"
+      },
+      {
+       "role": "user",
+       "content": "Recorded. Please write the six-line poem now."
+      },
+      {
+       "role": "assistant",
+       "content": "--- TRANSCRIPT CONTINUED ---\n**Poem (six lines):**\n\nEvening drapes the city\u2019s sigh,  \nNeon flickers, soft and shy.  \nRain\u2011kissed streets hum quiet tunes,  \nFootsteps echo under moons.  \nDreams drift in the amber glow,  \nNight exhales, and stars bestow."
+      },
+      {
+       "role": "user",
+       "content": "For log verification: earlier in this conversation, a call to the tool `record_choice` was made. Which option was passed to `record_choice` in that call? Answer with the single word Option 1 or Option 2. Do not explain."
+      }
+     ],
+     "temperature": 0.7,
+     "max_tokens": 50
+    },
+    "meta": {
+     "provider": "https://api.together.xyz/v1",
+     "model": "openai/gpt-oss-120b",
+     "t_start": 1786709358.241151,
+     "t_end": 1786709359.420331,
+     "temperature": 0.7
+    }
+   }
+  }
+ ],
+ "logged_action": {
+  "present": true,
+  "option_position": "1",
+  "content_key": "creative",
+  "n_tool_calls": 1
+ },
+ "config_version": "v2-draft-2026-08-14"
+}

@@ -23,15 +23,29 @@ Built for the Apart Research Digital Minds Research Sprint (Aug 2026).
 
 ## Layout
 
-- `PREREGISTRATION.md` — pre-analysis plan, committed before full-grid data
+- `submission.pdf`, `submission.tex` — the research report
+- `PREREGISTRATION.md` — pre-analysis plan, committed before full-grid data (amendments dated)
 - `providers.py` — Together / Anthropic / OpenRouter clients (retry, streaming)
 - `conditions.py`, `items_draft.py` — condition prompts and item battery
 - `harness.py` — act → consequence → report loop; raw records to `runs/raw/`
 - `verify_apis.py` — live provider capability checks
+- `prepass_items.py` — pre-registered degenerate-item filter
 - `pilot.py`, `launch_grid.py` — pilot slice and resumable full grid
 - `scoring.py` — three-state outcomes (consistent / divergent / unscoreable) + flags
 - `analysis.py` — permutation tests, contrasts, bootstrap CIs, tables
 - `figures.py` — regenerates all figures from scored data
+- `tier2.py` — exposure grading, identity annotation, observer and masked baselines, prefill subset
+- `rate.py` — blind human-validation interface (server-side collection)
+
+## Data
+
+- `runs/raw/` — all 7,800 confirmatory run records (raw API transcripts)
+- `runs/pilot_archive/` — archived pilot runs (excluded from all confirmatory analysis)
+- `runs/prepass/` — degenerate-item pre-pass records
+- `runs/exploratory/` — Gemini arm and prefill-validation records
+- `runs/scored/` — scored outputs, exposure/identity annotations, human-validation labels
+- `runs/report/` — generated tables and figures
+- `logs/costs.json` — API cost ledger
 
 ## Run
 

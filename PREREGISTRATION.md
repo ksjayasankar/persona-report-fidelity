@@ -120,6 +120,14 @@ Slip trigger: grid not launched by Sat 23:00 -> cut to 6 items x 3 conditions
 
 ## Amendments (dated, post-lock)
 
+- 2026-08-15, before any Tier-2 analysis: grader/observer duties moved from
+  Kimi-K2.6 (Together) to Gemini 3.7 Flash (OpenRouter). Reason: Together
+  credit exhaustion mid-grading; Kimi reasoning-token cost infeasible in
+  budget. Gemini remains outside the confirmatory panel (it appears only in
+  the separately-reported exploratory arm), so the non-panel-judge rule holds.
+  All judge outputs produced under the failed Kimi runs were discarded, not
+  mixed.
+
 - 2026-08-14, before any confirmatory analysis: 240 pilot-v4 records (200 of
   which shared run IDs with confirmatory grid cells) were moved from runs/raw
   to runs/pilot_archive so the pilot-exclusion rule holds exactly; the
